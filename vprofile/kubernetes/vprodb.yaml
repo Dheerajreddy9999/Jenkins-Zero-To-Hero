@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: vprodb
+spec:
+  selector:
+    matchLabels:
+      app: vprodb
+  serviceName: "vprodb"
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: vprodb
+    spec:
+      containers:
+      - name: vprodb
+        image: dheerajlearningdocker/vprofiledb:V1
+        env:
+          - name: MYSQL_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: app-secret
+                key: db-pass
+        ports:
+        - containerPort: 3306
+          name: vprodb-port
+        volumeMounts:
+        - name: www
+          mountPath: /var/lib/mysql
+  volumeClaimTemplates:
+  - metadata:
+      name: www
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 3Gi
+        
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: vprodb
+spec:
+  selector:
+    app: vprodb
+  ports:
+  - port: 3306
+    targetPort: 3306
+  selector:
+    app: vprodb
+  clusterIP: None
+
+
