@@ -12,5 +12,14 @@ pipeline {
         registryUrl = "http://asia.gcr.io"
     }
 
+    stages {
+
+        stage('Build') {
+            steps {
+                sh 'mvn clean install -DskipTests'
+            }
+        }
+    }
+
 
 }
