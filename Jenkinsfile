@@ -13,11 +13,26 @@ pipeline {
 
     stages{
 
-        stage('Build') {
+        stage('BUIld') {
             steps {
                 sh 'mvn clean install -DskipTests'
             }
-
       }
+
+      stage('TEST') {
+         steps {
+            sh 'mvn test'
+         }
+      }
+
+      stage('INTEGRATION TEST') {
+         steps {
+            sh 'mvn verify -DskipUnitTests'
+         }      
+      }
+
+
+
+
    }
 }
