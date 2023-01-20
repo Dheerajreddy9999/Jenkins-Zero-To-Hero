@@ -1,27 +1,22 @@
 pipeline {
-    
- stages {
     agent any
+    tools {
+	    maven "MAVEN3"
+	    jdk "JDK8"
+	}
 
-     tools {
-        maven "MAVEN3"
-        jdk "JDK8"
-     } 
-    
-     environment {
-        dockeRepo="asia.gcr.io/hypnotic-camp-371708/vproapp"
-        registrycredential="gcr:hypnotic-camp-371708"
-        registryUrl="http://asia.gcr.io"
-     }
+   environment {
+      dockerRepoName = "asia.gcr.io/hypnotic-camp-371708/vprofile-app"
+      registryCredential = "gcr:hypnotic-camp-371708"
+      registryUrl = "http://asia.gcr.io"
+   }
 
-     stages {
+    stages{
 
         stage('Build') {
             steps {
                 sh 'mvn clean install -DskipTests'
             }
-        }
-     }
 
-   }
+    }
 }
