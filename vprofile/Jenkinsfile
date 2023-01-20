@@ -1,11 +1,9 @@
 pipeline {
     agent any
-
        tools {
         maven "MAVEN3"
         jdk "JDK8"
     }
-
     environment {
         dockerRepo = "asia.gcr.io/hypnotic-camp-371708/vproapp"
         registryCredential = "gcr:hypnotic-camp-371708"
