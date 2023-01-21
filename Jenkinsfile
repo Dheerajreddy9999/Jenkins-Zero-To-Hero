@@ -13,13 +13,13 @@ pipeline {
 
     stages{
 
-        stage('BUIld') {
+        stage('BUILD') {
             steps {
                 sh 'mvn clean install -DskipTests'
             }
       }
 
-      stage('TEST') {
+      stage('UNIT TEST') {
          steps {
             sh 'mvn test'
          }
@@ -29,6 +29,22 @@ pipeline {
          steps {
             sh 'mvn verify -DskipUnitTests'
          }      
+      }
+
+      stage('CODE ANALYSIS WITH CHECKSTYLE') {
+         steps {
+            script {
+               sh 'mvn checkstyle:checkstyle'
+            }
+         }
+      }
+
+      stage('Building Image') {
+         steps {
+            script {
+               dockerImage = docker.build dockerRepoName + ":V$BUILD_NUMBER"
+            }
+         }
       }
 
 
