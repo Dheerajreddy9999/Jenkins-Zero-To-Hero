@@ -47,6 +47,22 @@ pipeline {
          }
       }
 
+      stage('Deploy Image To GCR') {
+         steps {
+            script {
+               docker.withRegistry(registryUrl,registryCredential) {
+                  dockerImage.push("v$BUILD_NUMER")
+               }
+            }
+         }
+      }
+
+      stage('Remove Unused Image') {
+         steps {
+            sh 'docker rmi $dockerRepoName:V$BUILD_NUMBER'
+         }
+      }
+
 
 
 
