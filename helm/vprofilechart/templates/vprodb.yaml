@@ -15,8 +15,8 @@ spec:
     spec:
       containers:
       - name: vprodb
-        # image: asia.gcr.io/hypnotic-camp-371708/vprdbfix:latest
-        image: imranvisualpath/vprdbfix
+        image: asia.gcr.io/hypnotic-camp-371708/vprdbfix:latest
+        # image: imranvisualpath/vprdbfix
         env:
           - name: MYSQL_ROOT_PASSWORD
             valueFrom:
