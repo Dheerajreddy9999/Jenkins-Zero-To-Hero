@@ -23,6 +23,12 @@ pipeline {
          steps {
             sh 'mvn test'
          }
+         post {
+            success {
+               echo'Now Archiving'
+               archiveArtifacts artifacts: '**/target/*.war'
+            }
+         }
       }
 
       stage('INTEGRATION TEST') {
@@ -51,7 +57,7 @@ pipeline {
          steps {
             script {
                docker.withRegistry(registryUrl,registryCredential) {
-                  dockerImage.push("v$BUILD_NUMBER")
+                  dockerImage.push("V$BUILD_NUMBER")
                }
             }
          }
