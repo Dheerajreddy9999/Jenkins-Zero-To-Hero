@@ -23,12 +23,6 @@ pipeline {
          steps {
             sh 'mvn test'
          }
-         post {
-            success {
-               echo'Now Archiving'
-               archiveArtifacts artifacts: '**/target/*.war'
-            }
-         }
       }
 
       stage('INTEGRATION TEST') {
