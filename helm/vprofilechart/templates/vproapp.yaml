@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: vproapp
-        image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+        image: {{ .Values.image.repository }}
         ports:
         - containerPort: 8080
       # initContainers:
@@ -38,5 +38,5 @@ spec:
   ports:
   - port: 80
     targetPort: 8080
-  type: ClusterIP
+  type: LoadBalancer
 

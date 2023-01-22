@@ -4,5 +4,4 @@
 
 
 image:
-  repository: dheerajlearningdocker/vprofileapp
-  tag: V1
+  repository: dheerajlearningdocker/vprofileapp:V1
