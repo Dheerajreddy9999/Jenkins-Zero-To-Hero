@@ -16,6 +16,8 @@ spec:
       containers:
       - name: vprodb
         image: imranvisualpath/vprdbfix
+        args:
+          - "--ignore-db-dir=lost+found"
         env:
           - name: MYSQL_ROOT_PASSWORD
             valueFrom:
