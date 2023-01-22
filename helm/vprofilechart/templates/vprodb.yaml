@@ -7,7 +7,7 @@ spec:
     matchLabels:
       app: vprodb
   serviceName: "vprodb"
-  replicas: 1
+  replicas: 2
   template:
     metadata:
       labels:
