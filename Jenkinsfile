@@ -39,29 +39,6 @@ pipeline {
          }
       }
 
-      stage('Building Image') {
-         steps {
-            script {
-               dockerImage = docker.build dockerRepoName + ":V$BUILD_NUMBER"
-            }
-         }
-      }
-
-      stage('Deploy Image To GCR') {
-         steps {
-            script {
-               docker.withRegistry(registryUrl,registryCredential) {
-                  dockerImage.push("V$BUILD_NUMBER")
-               }
-            }
-         }
-      }
-
-      stage('Remove Unused Image') {
-         steps {
-            sh 'docker rmi $dockerRepoName:V$BUILD_NUMBER'
-         }
-      }
 
       stage('CODE ANALYSIS with SONARQUBE') {
 
@@ -86,6 +63,32 @@ pipeline {
                  }   
            }
       } 
+
+
+      stage('Building Image') {
+         steps {
+            script {
+               dockerImage = docker.build dockerRepoName + ":V$BUILD_NUMBER"
+            }
+         }
+      }
+
+      stage('Deploy Image To GCR') {
+         steps {
+            script {
+               docker.withRegistry(registryUrl,registryCredential) {
+                  dockerImage.push("V$BUILD_NUMBER")
+               }
+            }
+         }
+      }
+
+      stage('Remove Unused Image') {
+         steps {
+            sh 'docker rmi $dockerRepoName:V$BUILD_NUMBER'
+         }
+      }
+
 
       stage('Deploy to Kubernetes') {
          agent { label 'GKE' }
