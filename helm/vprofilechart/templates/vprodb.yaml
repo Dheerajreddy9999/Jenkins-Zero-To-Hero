@@ -15,7 +15,8 @@ spec:
     spec:
       containers:
       - name: vprodb
-        image: imranvisualpath/vprdbfix
+        # image: imranvisualpath/vprdbfix
+        image: asia.gcr.io/hypnotic-camp-371708/vprdbfix
         args:
           - "--ignore-db-dir=lost+found"
         env:
