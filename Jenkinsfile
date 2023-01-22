@@ -90,7 +90,7 @@ pipeline {
       stage('Deploy to Kubernetes') {
          agent { label 'GKE' }
          steps {
-            sh 'helm upgarde --install --force Ecommerce helm/vprofilechart  --set image.repository=${dockerRepoName}:V${BUILD_NUMBER} --namespace prod'
+            sh 'helm upgrade --install --force Ecommerce helm/vprofilechart  --set image.repository=${dockerRepoName}:V${BUILD_NUMBER} --namespace prod'
          }
       }
 
