@@ -5,7 +5,7 @@ metadata:
   labels:
     app: vproapp
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: vproapp
@@ -38,5 +38,5 @@ spec:
   ports:
   - port: 80
     targetPort: 8080
-  type: LoadBalancer
+  type: ClusterIP
 
