@@ -25,15 +25,21 @@ spec:
                 name: app-secret
                 key: db-pass
         ports:
-        - containerPort: 3306
-          name: vprodb-port
+        - containerPort: {{ .Values.vprodb.containerport }}
+          name: {{ .Values.vprodb.portName }}
         volumeMounts:
         - name: mypvc
           mountPath: /var/lib/mysql
-      volumes: 
-      - name: mypvc
-        persistentVolumeClaim:
-          claimName: mypvc
+  volumeClaimTemplates:
+  - metadata:
+      name: mypvc
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: {{ .Values.vprodb.persistance.storage }}
+    
+        
 
 ---
 
@@ -45,8 +51,8 @@ spec:
   selector:
     app: vprodb
   ports:
-  - port: 3306
-    targetPort: 3306
+  - port: {{ .Values.vprodb.service.port }}
+    targetPort: {{ .Values.vprodb.portName }}
   selector:
     app: vprodb
   clusterIP: None
