@@ -4,11 +4,8 @@ vproapp:
     repository: dheerajlearningdocker/vprofileapp
     tag: V1
   replicacount: 2
-  containerport: 8080
-  portName: vproapp-port
   service:
-    port: 80
-    type: LoadBalancer
+    type: ClusterIP
 
 
 # Default values for memcache
@@ -16,38 +13,21 @@ vpromc:
   image:
     repository: memcached
     tag: latest
-  replicacount: 2
-  containerport: 11211
-  portName: memcache-port
-  service:
-    port: 11211
-    type: ClusterIP
+  replicacount: 1
 
 # Default values for rabbitmq
 vprormq:
   image: 
     repository: rabbitmq
     tag: latest
-  replicacount: 2
-  containerport: 15672
-  portName: rabbitmq-port
-  service:
-    port: 15672
-    type: ClusterIP
-  rmq_password: Z3Vlc3Q=
-  rmq_user: "guest"
+  replicacount: 1
 
 
 # Default values for mysql
 vprodb:
   image: 
-    repository: asia.gcr.io/hypnotic-camp-371708/vprdbfix
-    tag: latest
-  replicacount: 2
-  containerport: 3306
-  portName: vprodb-port
-  service:
-    port: 3306
-  db_password: dnByb2RicGFzcw==
+    repository: dheerajlearningdocker/vprofiledb
+    tag: vprdbfix
+  replicacount: 1
   persistance:
     storage: 3Gi
