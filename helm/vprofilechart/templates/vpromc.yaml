@@ -5,7 +5,7 @@ metadata:
   labels:
     app: vpromc
 spec:
-  replicas: 1
+  replicas: {{ .Values.vpromc.replicacount }}
   selector:
     matchLabels:
       app: vpromc
@@ -16,9 +16,10 @@ spec:
     spec:
       containers:
       - name: vpromc
-        image: memcached
+        image: {{ .Values.vpromc.image.repository }}:{{ .Values.vpromc.image.tag }}
         ports:
-        - containerPort: 11211
+        - name: {{ .Values.vpromc.portName }}
+          containerPort: {{ .Values.vpromc.containerport }}
 ---
 
 apiVersion: v1
@@ -29,7 +30,7 @@ spec:
   selector:
     app: vpromc
   ports:
-  - port: 11211
-    targetPort: 11211
-  type: ClusterIP
+  - port: {{ .Values.vpromc.service.port }}
+    targetPort: {{ .Values.vpromc.portName }}
+  type: {{ .Values.vpromc.service.type }}
 

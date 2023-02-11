@@ -1,7 +1,36 @@
-# Default values for vprofilechart.
-# This is a YAML-formatted file.
-# Declare variables to be passed into your templates.
+# Default values for vproapp 
+vproapp:
+  image:
+    repository: dheerajlearningdocker/vprofileapp
+    tag: V1
+  replicacount: 2
+  containerport: 8080
+  portName: vproapp-port
+  service:
+    port: 80
+    type: LoadBalancer
 
 
-image:
-  repository: dheerajlearningdocker/vprofileapp:V1
+# Default values for memcache
+vpromc:
+  image:
+    repository: memcached
+    tag: latest
+  replicacount: 2
+  containerport: 11211
+  portName: memcache-port
+  service:
+    port: 11211
+    type: ClusterIP
+
+# Default values for rabbitmq
+vprormq:
+  image: 
+    repository: rabbitmq
+    tag: latest
+  replicacount: 2
+  containerport: 15672
+  portName: rabbitmq-port
+  service:
+    port: 15672
+    type: ClusterIP

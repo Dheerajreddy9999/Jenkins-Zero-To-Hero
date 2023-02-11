@@ -5,7 +5,7 @@ metadata:
   labels:
     app: vpromq01
 spec:
-  replicas: 1
+  replicas: {{ .Values.vprormq.replicacount }}
   selector:
     matchLabels:
       app: vpromq01
@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: vpromq01
-        image: rabbitmq
+        image: {{ .Values.vprormq.image.repository }}:{{ .Values.vprormq.image.tag }}
         env:
           - name: RABBITMQ_DEFAULT_PASS
             valueFrom:
@@ -27,7 +27,8 @@ spec:
             value: "guest"
               
         ports:
-        - containerPort: 15672
+        - name: {{ .Values.vprormq.portName }}
+          containerPort: {{ .Values.vprormq.containerport }}
 
 ---
 apiVersion: v1
@@ -38,7 +39,7 @@ spec:
   selector:
     app: vpromq01
   ports:
-  - port: 15672
-    targetPort: 15672
-  type: ClusterIP
+  - port: {{ .Values.vprormq.service.port }}
+    targetPort: {{ .Values.vprormq.portName }}
+  type: {{ .Values.vprormq.service.type }}
 

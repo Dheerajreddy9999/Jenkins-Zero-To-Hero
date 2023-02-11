@@ -5,7 +5,7 @@ metadata:
   labels:
     app: vproapp
 spec:
-  replicas: 1
+  replicas: {{ .Values.vproapp.replicacount }}
   selector:
     matchLabels:
       app: vproapp
@@ -16,9 +16,10 @@ spec:
     spec:
       containers:
       - name: vproapp
-        image: {{ .Values.image.repository }}
+        image: {{ .Values.vproapp.image.repository }}:{{ .Values.vproapp.image.tag }}
         ports:
-        - containerPort: 8080
+        - name: {{ .Values.vproapp.portName }}
+          containerPort: {{ .Values.vproapp.containerport }}
       # initContainers:
         # - name: init-mydb
         #   image: busybox
@@ -36,7 +37,7 @@ spec:
   selector:
     app: vproapp
   ports:
-  - port: 80
-    targetPort: 8080
-  type: LoadBalancer
+  - port: {{ .Values.vproapp.service.port }}
+    targetPort: {{ .Values.vproapp.portName }}
+  type: {{ .Values.vproapp.service.type }}
 
