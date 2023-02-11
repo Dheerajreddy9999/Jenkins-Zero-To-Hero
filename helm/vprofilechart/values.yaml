@@ -34,3 +34,5 @@ vprormq:
   service:
     port: 15672
     type: ClusterIP
+  rmq-password: Z3Vlc3Q=
+  rmq-user: "guest"
