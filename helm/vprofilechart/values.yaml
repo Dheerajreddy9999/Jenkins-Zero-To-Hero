@@ -1,8 +1,8 @@
 # Default values for vproapp 
 vproapp:
   image:
-    repository: dheerajlearningdocker/vprofileapp
-    tag: V1
+    repository: asia.gcr.io/hypnotic-camp-371708/vprofile-app
+    tag: latest
   replicacount: 2
   containerport: 8080
   portName: vproapp-port
