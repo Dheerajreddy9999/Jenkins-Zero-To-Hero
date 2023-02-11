@@ -3,23 +3,17 @@ vproapp:
   image:
     repository: dheerajlearningdocker/vprofileapp
     tag: V1
-  replicacount: 2
+  replicacount: 1
   service:
     type: ClusterIP
 
 
 # Default values for memcache
 vpromc:
-  image:
-    repository: memcached
-    tag: latest
   replicacount: 1
 
 # Default values for rabbitmq
 vprormq:
-  image: 
-    repository: rabbitmq
-    tag: latest
   replicacount: 1
 
 
