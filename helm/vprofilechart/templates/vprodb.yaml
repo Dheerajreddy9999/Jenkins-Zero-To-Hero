@@ -7,7 +7,7 @@ spec:
     matchLabels:
       app: vprodb
   serviceName: "vprodb"
-  replicas: 1
+  replicas: {{ .Values.vprodb.replicacount }}
   template:
     metadata:
       labels:
@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: vprodb
-        image: asia.gcr.io/hypnotic-camp-371708/vprdbfix
+        image: {{ .Values.vprodb.image.repository }}:{{ .Values.vprodb.image.tag }}
         args:
           - "--ignore-db-dir=lost+found"
         env:
@@ -28,17 +28,13 @@ spec:
         - containerPort: 3306
           name: vprodb-port
         volumeMounts:
-        - name: www
+        - name: mypvc
           mountPath: /var/lib/mysql
-  volumeClaimTemplates:
-  - metadata:
-      name: www
-    spec:
-      accessModes: [ "ReadWriteOnce" ]
-      resources:
-        requests:
-          storage: 3Gi
-        
+      volumes: 
+      - name: mypvc
+        persistentVolumeClaim:
+          claimName: mypvc
+
 ---
 
 apiVersion: v1

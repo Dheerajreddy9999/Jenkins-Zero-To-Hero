@@ -34,5 +34,18 @@ vprormq:
   service:
     port: 15672
     type: ClusterIP
-  rmq-password: Z3Vlc3Q=
-  rmq-user: "guest"
+  rmq_password: Z3Vlc3Q=
+  rmq_user: "guest"
+
+
+  # Default values for mysql
+  vprodb:
+    image: 
+      repository: asia.gcr.io/hypnotic-camp-371708/vprdbfix
+      tag: latest
+    replicacount: 2
+    containerport: 3306
+    portName: vprodb-port
+    service:
+      port: 3306
+    db_password: dnByb2RicGFzcw==

@@ -24,7 +24,7 @@ spec:
                 name: app-secret
                 key: rmq-pass
           - name: RABBITMQ_DEFAULT_USER
-            value: {{ .Values.vprormq.rmq-user }}
+            value: {{ .Values.vprormq.rmq_user }}
               
         ports:
         - name: {{ .Values.vprormq.portName }}
