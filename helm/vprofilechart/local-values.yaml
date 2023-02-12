@@ -7,7 +7,6 @@ vproapp:
   service:
     type: ClusterIP
 
-
 # Default values for memcache
 vpromc:
   replicacount: 1
@@ -15,7 +14,7 @@ vpromc:
 # Default values for rabbitmq
 vprormq:
   replicacount: 1
-
+  
 
 # Default values for mysql
 vprodb:

@@ -20,13 +20,6 @@ spec:
         ports:
         - name: {{ .Values.vproapp.portName }}
           containerPort: {{ .Values.vproapp.containerport }}
-      # initContainers:
-        # - name: init-mydb
-        #   image: busybox
-        #   command: ['sh', '-c', "until nslookup vprodb; do echo waiting for vprodb; sleep 2; done"]
-        # - name: init-memcacahe
-        #   image: busybox
-        #   command: ['sh', '-c', "until nslookup vprocache01; do echo waiting for vprocache01; sleep 2; done"]
 
 ---
 apiVersion: v1
