@@ -50,4 +50,4 @@ vprodb:
     port: 3306
   db_password: dnByb2RicGFzcw==
   persistance:
-    storage: 3Gi
+    storage: 10Gi
