@@ -5,7 +5,7 @@ vproapp:
     tag: V1
   replicacount: 1
   service:
-    type: ClusterIP
+    type: LoadBalancer
 
 # Default values for memcache
 vpromc:
