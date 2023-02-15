@@ -1,4 +1,4 @@
-# Default values for vproapp 
+# Local values for vproapp 
 vproapp:
   image:
     repository: dheerajlearningdocker/vprofileapp
@@ -7,16 +7,16 @@ vproapp:
   service:
     type: LoadBalancer
 
-# Default values for memcache
+# Local values for memcache
 vpromc:
   replicacount: 1
 
-# Default values for rabbitmq
+# Local values for rabbitmq
 vprormq:
   replicacount: 1
   
 
-# Default values for mysql
+# Locall values for mysql
 vprodb:
   image: 
     repository: dheerajlearningdocker/vprofiledb
