@@ -1,0 +1,8 @@
+#to docker hub
+
+kubectl create secret docker-registry regcred --docker-server=https://index.docker.io/v1/ --docker-username=kunchalavikram --docker-password=<your-pword> --docker-email=<your-email>
+
+#to gcr
+
+kubectl create secret generic kaniko-secret --from-file=hypnotic-camp-371708-7409959ef4b6.json=gcp-serviceAccount-keys/hypnotic-camp-371708-7409959ef4b6.json
+
