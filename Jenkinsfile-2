@@ -23,13 +23,6 @@ pipeline {
                 command:
                 - cat
                 tty: true
-                volumeMounts:
-                - name: kaniko-secret
-                  mountPath: /secret
-              volumes:
-              - name: kaniko-secret
-                secret:
-                  secretName: gcr-credential
             '''
         }
     }
@@ -51,7 +44,7 @@ pipeline {
         stage ('build image') {
             steps {
                 container ('kaniko') {
-                    sh "/kaniko/executor --context `pwd` --destination $dockerRepoName:$imageTag"
+                    sh "/kaniko/executor --context `pwd` --destination $dockerRepoName:$imageTag --secret-file=gcr-credential"
                 }
             }
         }
