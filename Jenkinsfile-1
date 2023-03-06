@@ -1,0 +1,71 @@
+pipeline {
+    agent {
+        kubernetes {
+            yaml '''
+            apiVersion: v1
+            kind: Pod
+            metadata:
+            spec:
+              serviceAccount: jenkins
+              containers:
+              - name: maven
+                image: maven:3.8.6-openjdk-8-slim
+                command:
+                - cat
+                tty: true
+              - name: helm-kubectl
+                image: dtzar/helm-kubectl:3.11
+                command:
+                - cat
+                tty: true
+            //   - name: kaniko
+            //     image: gcr.io/kaniko-project/executor:debug
+            //     command:
+            //     - cat
+            //     tty: true
+            //     volumeMounts:
+            //     - name: kaniko-secret
+            //       mountPath: /kaniko/.docker
+            //   volumes:
+            //   - name: kaniko-secret
+            //     secret:
+            //       secretName: regcred
+            //       items:
+            //         - key: .dockerconfigjson
+            //           path: config.json
+            '''
+        }
+    }
+
+    environment {
+        dockerRepoName = "dheerajlearningdocker/vprofile-app"
+        imageTag = "V${BUILD_NUMBER}"
+    }
+
+    stages{
+
+        stage ('Build') {
+            steps {
+                container ('maven') {
+                    sh 'mvn clean install'
+                }
+            }
+        }
+        // stage ('build image') {
+        //     steps {
+        //         container ('kaniko') {
+        //             sh "/kaniko/executor --context `pwd` --destination $dockerRepoName:$imageTag"
+        //         }
+        //     }
+        // }
+
+
+        // stage('Deploy to k8') {
+        //   steps {
+        //     container ('helm-kubectl') {
+        //       sh 'helm install pydemo pydemo/ --set image.repository=${dockerRepoName} --set image.tag=${imageTag}'
+        //     }
+        //   }
+        // }
+    }
+}
