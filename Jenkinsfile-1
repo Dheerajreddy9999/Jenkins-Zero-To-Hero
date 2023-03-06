@@ -51,13 +51,13 @@ pipeline {
                 }
             }
         }
-        // stage ('build image') {
-        //     steps {
-        //         container ('kaniko') {
-        //             sh "/kaniko/executor --context `pwd` --destination $dockerRepoName:$imageTag"
-        //         }
-        //     }
-        // }
+        stage ('build image') {
+            steps {
+                container ('kaniko') {
+                    sh "/kaniko/executor --context `pwd` --destination $dockerRepoName:$imageTag"
+                }
+            }
+        }
 
 
         // stage('Deploy to k8') {
