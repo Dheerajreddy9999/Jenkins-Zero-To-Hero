@@ -29,7 +29,7 @@ pipeline {
               volumes:
               - name: kaniko-secret
                 secret:
-                  secretName: regcred
+                  secretName: gcr-credential
             '''
         }
     }

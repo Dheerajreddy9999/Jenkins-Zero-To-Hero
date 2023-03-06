@@ -4,5 +4,5 @@ kubectl create secret docker-registry regcred --docker-server=https://index.dock
 
 #to gcr
 
-kubectl create secret generic kaniko-secret --from-file=hypnotic-camp-371708-7409959ef4b6.json=gcp-serviceAccount-keys/hypnotic-camp-371708-7409959ef4b6.json
+kubectl create secret generic gcr-credential --from-file=hypnotic-camp-371708-7409959ef4b6.json=gcp-serviceAccount-keys/hypnotic-camp-371708-7409959ef4b6.json
 
