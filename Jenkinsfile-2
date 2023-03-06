@@ -25,20 +25,17 @@ pipeline {
                 tty: true
                 volumeMounts:
                 - name: kaniko-secret
-                  mountPath: /kaniko/.docker
+                  mountPath: /secret
               volumes:
               - name: kaniko-secret
                 secret:
                   secretName: regcred
-                  items:
-                    - key: .dockerconfigjson
-                      path: config.json
             '''
         }
     }
 
     environment {
-        dockerRepoName = "dheerajlearningdocker/vprofile-app"
+        dockerRepoName = "asia.gcr.io/hypnotic-camp-371708/vprofile-app"
         imageTag = "V${BUILD_NUMBER}"
     }
 
