@@ -63,7 +63,9 @@ pipeline {
         stage('Deploy to k8') {
           steps {
             container ('helm-kubectl') {
-              sh 'helm upgrade --install --force ecommerce helm/vprofilechart  --set vproapp.image.repository=${dockerRepoName} --set vproapp.image.tag=${imageTag} '
+              sh 'helm upgrade --install --force ecommerce helm/vprofilechart  \
+              --set vproapp.image.repository=${dockerRepoName} \
+              --set vproapp.image.tag=${imageTag} '
             }
           }
         }
