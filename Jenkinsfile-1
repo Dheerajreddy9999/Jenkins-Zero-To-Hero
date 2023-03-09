@@ -65,7 +65,8 @@ pipeline {
             container ('helm-kubectl') {
               sh 'helm upgrade --install --force ecommerce helm/vprofilechart  \
               --set vproapp.image.repository=${dockerRepoName} \
-              --set vproapp.image.tag=${imageTag} '
+              --set vproapp.image.tag=${imageTag} \
+              --namespace prod '
             }
           }
         }
