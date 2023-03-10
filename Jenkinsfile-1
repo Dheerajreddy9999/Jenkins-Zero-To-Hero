@@ -6,7 +6,7 @@ pipeline {
             kind: Pod
             metadata:
             spec:
-              serviceAccount: jenkins
+              serviceAccount: my-jenkins
               containers:
               - name: maven
                 image: maven:3.8.6-openjdk-8-slim
@@ -65,8 +65,7 @@ pipeline {
             container ('helm-kubectl') {
               sh 'helm upgrade --install --force ecommerce helm/vprofilechart  \
               --set vproapp.image.repository=${dockerRepoName} \
-              --set vproapp.image.tag=${imageTag} \
-              --namespace prod '
+              --set vproapp.image.tag=${imageTag} '
             }
           }
         }
