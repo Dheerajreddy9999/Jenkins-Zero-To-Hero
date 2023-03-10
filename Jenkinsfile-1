@@ -6,7 +6,7 @@ pipeline {
             kind: Pod
             metadata:
             spec:
-              serviceAccount: my-jenkins
+              serviceAccount: jenkins
               containers:
               - name: maven
                 image: maven:3.8.6-openjdk-8-slim
