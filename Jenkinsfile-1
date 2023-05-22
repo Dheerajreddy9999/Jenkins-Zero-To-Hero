@@ -44,31 +44,39 @@ pipeline {
 
     stages{
 
-        stage ('Build') {
-            steps {
-                container ('maven') {
-                    sh 'mvn clean install'
-                }
+      stage('CODE ANALYSIS WITH CHECKSTYLE') {
+         steps {
+            container ('maven') {
+               sh 'mvn checkstyle:checkstyle'
             }
-        }
-        stage ('build image') {
-            steps {
-                container ('kaniko') {
-                    sh "/kaniko/executor --context `pwd` --destination $dockerRepoName:$imageTag"
-                }
-            }
-        }
+         }
+      }
+
+        // stage ('Build') {
+        //     steps {
+        //         container ('maven') {
+        //             sh 'mvn clean install'
+        //         }
+        //     }
+        // }
+        // stage ('build image') {
+        //     steps {
+        //         container ('kaniko') {
+        //             sh "/kaniko/executor --context `pwd` --destination $dockerRepoName:$imageTag"
+        //         }
+        //     }
+        // }
 
 
-        stage('Deploy to k8') {
-          steps {
-            container ('helm-kubectl') {
-              sh 'helm upgrade --install --force ecommerce helm/vprofilechart  \
-              --set vproapp.image.repository=${dockerRepoName} \
-              --set vproapp.image.tag=${imageTag} \
-              -n prod --create-namespace '
-            }
-          }
-        }
+        // stage('Deploy to k8') {
+        //   steps {
+        //     container ('helm-kubectl') {
+        //       sh 'helm upgrade --install --force ecommerce helm/vprofilechart  \
+        //       --set vproapp.image.repository=${dockerRepoName} \
+        //       --set vproapp.image.tag=${imageTag} \
+        //       -n prod --create-namespace '
+        //     }
+        //   }
+        // }
     }
 }
