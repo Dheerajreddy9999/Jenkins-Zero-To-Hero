@@ -96,7 +96,7 @@ pipeline {
             sh 'helm upgrade --install --force ecommerce helm/vprofilechart  \
             --set vproapp.image.repository=${dockerRepoName} \
             --set vproapp.image.tag=V${BUILD_NUMBER} \
-            --namespace prod'
+            -n prod --create-namespace'
          }
       }
 
