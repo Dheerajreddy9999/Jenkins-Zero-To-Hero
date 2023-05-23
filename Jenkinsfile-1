@@ -48,7 +48,7 @@ pipeline {
         steps {
           container('maven') {
             sh '''
-            mvn clean verify sonar:sonar \
+            mvn sonar:sonar \
               -Dsonar.projectKey=vprofile \
               -Dsonar.projectName='vprofile-project' \
               -Dsonar.host.url=http://my-sonarqube-sonarqube.default.svc.cluster.local:9000 \
