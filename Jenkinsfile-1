@@ -47,7 +47,7 @@ pipeline {
       stage('CODE ANALYSIS WITH CHECKSTYLE') {
          steps {
             container ('maven') {
-              withSonarQubeEnv(credentialsId: 'sonar-scanner', installationName: 'sonar4.8') {
+              withSonarQubeEnv(credentialsId: 'sonar-scanner', installationName: 'sonar4.7') {
                   sh 'mvn sonar:sonar'
              }   
             }
