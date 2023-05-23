@@ -44,7 +44,13 @@ pipeline {
 
     stages{
 
-  
+      stage ('Build') {
+            steps {
+                container ('maven') {
+                    sh 'mvn clean install -DskipTests'
+                }
+            }
+        }
 
       stage('CODE ANALYSIS WITH CHECKSTYLE') {
          steps {
@@ -79,13 +85,6 @@ pipeline {
            }
       } 
 
-        // stage ('Build') {
-        //     steps {
-        //         container ('maven') {
-        //             sh 'mvn clean install'
-        //         }
-        //     }
-        // }
         // stage ('build image') {
         //     steps {
         //         container ('kaniko') {
