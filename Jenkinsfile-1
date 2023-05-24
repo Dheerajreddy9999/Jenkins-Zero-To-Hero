@@ -118,7 +118,7 @@ pipeline {
               --set vproapp.image.repository=${dockerRepoName} \
               --set vproapp.image.tag=${imageTag} \
               -n prod --create-namespace \
-              -f helm/local-values.yaml'
+              -f helm/vprofilechart/local-values.yaml'
             }
           }
         }
