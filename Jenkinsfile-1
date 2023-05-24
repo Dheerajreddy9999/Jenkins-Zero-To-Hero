@@ -44,9 +44,20 @@ pipeline {
 
     stages{
 
+        stage('UNIT TEST') {
+         steps {
+            container ('maven') {
+                sh 'mvn test'
+            }
+         }
+      }
+
+
       stage('INTEGRATION TEST') {
          steps {
-            sh 'mvn verify -DskipUnitTests'
+             container ('maven') {
+                 sh 'mvn verify -DskipUnitTests'
+            }
          }      
       }
 
