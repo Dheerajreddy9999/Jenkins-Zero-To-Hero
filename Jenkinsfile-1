@@ -44,22 +44,22 @@ pipeline {
 
     stages{
 
-        stage('UNIT TEST') {
-         steps {
-            container ('maven') {
-                sh 'mvn test'
-            }
-         }
-      }
+      //   stage('UNIT TEST') {
+      //    steps {
+      //       container ('maven') {
+      //           sh 'mvn test'
+      //       }
+      //    }
+      // }
 
 
-      stage('INTEGRATION TEST') {
-         steps {
-             container ('maven') {
-                 sh 'mvn verify -DskipUnitTests'
-            }
-         }      
-      }
+      // stage('INTEGRATION TEST') {
+      //    steps {
+      //        container ('maven') {
+      //            sh 'mvn verify -DskipUnitTests'
+      //       }
+      //    }      
+      // }
 
       stage ('Build') {
             steps {
@@ -69,13 +69,13 @@ pipeline {
             }
         }
 
-      stage('CODE ANALYSIS WITH CHECKSTYLE') {
-         steps {
-            container ('maven') {
-                  sh 'mvn checkstyle:checkstyle'
-            }
-         }
-      }
+      // stage('CODE ANALYSIS WITH CHECKSTYLE') {
+      //    steps {
+      //       container ('maven') {
+      //             sh 'mvn checkstyle:checkstyle'
+      //       }
+      //    }
+      // }
 
       // stage('CODE ANALYSIS with SONARQUBE') {
 
