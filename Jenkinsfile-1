@@ -1,6 +1,7 @@
 pipeline {
     agent {
         kubernetes {
+            workspaceVolume persistentVolumeClaimWorkspaceVolume(claimName: 'workspace', readOnly: false)
             yaml '''
             apiVersion: v1
             kind: Pod
