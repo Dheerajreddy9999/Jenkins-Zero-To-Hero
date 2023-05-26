@@ -44,22 +44,22 @@ pipeline {
 
     stages{
 
-      //   stage('UNIT TEST') {
-      //    steps {
-      //       container ('maven') {
-      //           sh 'mvn test'
-      //       }
-      //    }
-      // }
+        stage('UNIT TEST') {
+         steps {
+            container ('maven') {
+                sh 'mvn test'
+            }
+         }
+      }
 
 
-      // stage('INTEGRATION TEST') {
-      //    steps {
-      //        container ('maven') {
-      //            sh 'mvn verify -DskipUnitTests'
-      //       }
-      //    }      
-      // }
+      stage('INTEGRATION TEST') {
+         steps {
+             container ('maven') {
+                 sh 'mvn verify -DskipUnitTests'
+            }
+         }      
+      }
 
       stage ('Build') {
             steps {
@@ -69,38 +69,38 @@ pipeline {
             }
         }
 
-      // stage('CODE ANALYSIS WITH CHECKSTYLE') {
-      //    steps {
-      //       container ('maven') {
-      //             sh 'mvn checkstyle:checkstyle'
-      //       }
-      //    }
-      // }
+      stage('CODE ANALYSIS WITH CHECKSTYLE') {
+         steps {
+            container ('maven') {
+                  sh 'mvn checkstyle:checkstyle'
+            }
+         }
+      }
 
-      // stage('CODE ANALYSIS with SONARQUBE') {
+      stage('CODE ANALYSIS with SONARQUBE') {
 
-      //       environment {
-      //           scannerHome = tool 'sonar4.7'
-      //       }
+            environment {
+                scannerHome = tool 'sonar4.7'
+            }
 
-      //       steps {
-      //           withSonarQubeEnv('sonar-scanner') {
-      //               sh '''${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=vprofile \
-      //              -Dsonar.projectName=vprofile-repo \
-      //              -Dsonar.projectVersion=1.0 \
-      //              -Dsonar.sources=src/ \
-      //              -Dsonar.java.binaries=target/test-classes/com/visualpathit/account/controllerTest/ \
-      //              -Dsonar.junit.reportsPath=target/surefire-reports/ \
-      //              -Dsonar.jacoco.reportsPath=target/jacoco.exec \
-      //              -Dsonar.java.checkstyle.reportPaths=target/checkstyle-result.xml
-      //              '''
-      //           }
+            steps {
+                withSonarQubeEnv('sonar-scanner') {
+                    sh '''${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=vprofile \
+                   -Dsonar.projectName=vprofile-repo \
+                   -Dsonar.projectVersion=1.0 \
+                   -Dsonar.sources=src/ \
+                   -Dsonar.java.binaries=target/test-classes/com/visualpathit/account/controllerTest/ \
+                   -Dsonar.junit.reportsPath=target/surefire-reports/ \
+                   -Dsonar.jacoco.reportsPath=target/jacoco.exec \
+                   -Dsonar.java.checkstyle.reportPaths=target/checkstyle-result.xml
+                   '''
+                }
 
-      //            timeout(time: 10, unit: 'MINUTES') {
-      //               waitForQualityGate abortPipeline: true
-      //            }   
-      //      }
-      // } 
+                 timeout(time: 10, unit: 'MINUTES') {
+                    waitForQualityGate abortPipeline: true
+                 }   
+           }
+      } 
 
         stage ('build image') {
             steps {
@@ -111,16 +111,16 @@ pipeline {
         }
 
 
-      //   stage('Deploy to k8') {
-      //     steps {
-      //       container ('helm-kubectl') {
-      //         sh 'helm upgrade --install --force ecommerce helm/vprofilechart  \
-      //         --set vproapp.image.repository=${dockerRepoName} \
-      //         --set vproapp.image.tag=${imageTag} \
-      //         -n prod --create-namespace \
-      //         -f helm/vprofilechart/local-values.yaml'
-      //       }
-      //     }
-      //   }
+        stage('Deploy to k8') {
+          steps {
+            container ('helm-kubectl') {
+              sh 'helm upgrade --install --force ecommerce helm/vprofilechart  \
+              --set vproapp.image.repository=${dockerRepoName} \
+              --set vproapp.image.tag=${imageTag} \
+              -n prod --create-namespace \
+              -f helm/vprofilechart/local-values.yaml'
+            }
+          }
+        }
     }
 }
