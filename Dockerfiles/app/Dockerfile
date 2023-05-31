@@ -1,5 +1,4 @@
-FROM openjdk:8 as base
-RUN apt update && apt install maven -y
+FROM maven:3.8.6-openjdk-8-slim as base
 RUN git clone https://github.com/Dheerajreddy9999/vprofile-project.git
 RUN cd vprofile-project && mvn install
 
