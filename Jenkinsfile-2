@@ -1,0 +1,51 @@
+pipeline {
+    agent {
+        kubernetes {
+            yaml '''
+            apiVersion: v1
+            kind: Pod
+            metadata:
+            spec:
+              serviceAccount: jenkins
+              containers:
+              - name: maven
+                image: maven:3.8.6-openjdk-8-slim
+                command:
+                - cat
+                tty: true
+            '''
+        }
+    }
+
+    stages {
+        stage ('maven build') {
+            steps {
+                sh 'mvn install -Dskiptests '
+            }
+        }
+
+
+        
+        stage("UploadArtifact"){
+            steps{
+                nexusArtifactUploader(
+                  nexusVersion: 'nexus3',
+                  protocol: 'http',
+                  nexusUrl: 'my-nexus-repository-manager.default.svc.cluster.local:8081',
+                  groupId: 'QA',
+                  version: "${env.BUILD_ID}",
+                  repository: 'vprofile-repo',
+                  credentialsId: 'nexuslogin',
+                  artifacts: [
+                    [artifactId: 'vproapp',
+                     classifier: '',
+                     file: 'target/vprofile-v2.war',
+                     type: 'war']
+    ]
+ )
+            }
+        }
+
+    }
+ 
+}
