@@ -20,7 +20,9 @@ pipeline {
     stages {
         stage ('maven build') {
             steps {
+                container ('maven') {
                 sh 'mvn install -Dskiptests '
+                }
             }
         }
 
