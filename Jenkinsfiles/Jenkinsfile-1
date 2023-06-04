@@ -13,9 +13,6 @@ pipeline {
                 command:
                 - cat
                 tty: true
-                volumeMounts:
-                - mountPath: "/root/.m2/repository"
-                  name: maven-repository
               - name: helm-kubectl
                 image: dtzar/helm-kubectl:3.11
                 command:
@@ -36,9 +33,6 @@ pipeline {
                   items:
                     - key: .dockerconfigjson
                       path: config.json
-              - name: maven-repository
-                persisitentVolumeClaim:
-                  claimName: maven-cache
             '''
         }
     }
