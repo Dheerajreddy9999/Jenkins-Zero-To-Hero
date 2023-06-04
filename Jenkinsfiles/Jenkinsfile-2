@@ -13,53 +13,36 @@ pipeline {
                 command:
                 - cat
                 tty: true
-              - name: helm-kubectl
-                image: dtzar/helm-kubectl:3.11
-                command:
-                - cat
-                tty: true
-              - name: kaniko
-                image: gcr.io/kaniko-project/executor:debug
-                command:
-                - cat
-                tty: true
                 volumeMounts:
-                - name: kaniko-secret
-                  mountPath: /kaniko/.docker
+                - mountPath: "/root/.m2/repository"
+                  name: maven-repository
               volumes:
-              - name: kaniko-secret
-                secret:
-                  secretName: regcred
-                  items:
-                    - key: .dockerconfigjson
-                      path: config.json
+              - name: maven-repository
+                persisitentVolumeClaim:
+                  claimName: maven-cache
             '''
         }
     }
 
-    environment {
-        dockerRepoName = "dheerajlearningdocker/vprofile-app"
-        imageTag = "V${BUILD_NUMBER}"
-    }
 
     stages{
 
-    //     stage('UNIT TEST') {
-    //      steps {
-    //         container ('maven') {
-    //             sh 'mvn test'
-    //         }
-    //      }
-    //   }
+        stage('UNIT TEST') {
+         steps {
+            container ('maven') {
+                sh 'mvn test'
+            }
+         }
+      }
 
 
-    //   stage('INTEGRATION TEST') {
-    //      steps {
-    //          container ('maven') {
-    //              sh 'mvn verify -DskipUnitTests'
-    //         }
-    //      }      
-    //   }
+      stage('INTEGRATION TEST') {
+         steps {
+             container ('maven') {
+                 sh 'mvn verify -DskipUnitTests'
+            }
+         }      
+      }
 
       stage ('Build') {
             steps {
@@ -69,58 +52,13 @@ pipeline {
             }
         }
 
-    //   stage('CODE ANALYSIS WITH CHECKSTYLE') {
-    //      steps {
-    //         container ('maven') {
-    //               sh 'mvn checkstyle:checkstyle'
-    //         }
-    //      }
-    //   }
-
-    //   stage('CODE ANALYSIS with SONARQUBE') {
-
-    //         environment {
-    //             scannerHome = tool 'sonar4.7'
-    //         }
-
-    //         steps {
-    //             withSonarQubeEnv('sonar-scanner') {
-    //                 sh '''${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=vprofile \
-    //                -Dsonar.projectName=vprofile-repo \
-    //                -Dsonar.projectVersion=1.0 \
-    //                -Dsonar.sources=src/ \
-    //                -Dsonar.java.binaries=target/test-classes/com/visualpathit/account/controllerTest/ \
-    //                -Dsonar.junit.reportsPath=target/surefire-reports/ \
-    //                -Dsonar.jacoco.reportsPath=target/jacoco.exec \
-    //                -Dsonar.java.checkstyle.reportPaths=target/checkstyle-result.xml
-    //                '''
-    //             }
-
-    //              timeout(time: 10, unit: 'MINUTES') {
-    //                 waitForQualityGate abortPipeline: true
-    //              }   
-    //        }
-    //   } 
-
-        stage ('build image') {
-            steps {
-                container ('kaniko') {
-                    sh "/kaniko/executor --context `pwd` --destination $dockerRepoName:$imageTag "
-                }
+      stage('CODE ANALYSIS WITH CHECKSTYLE') {
+         steps {
+            container ('maven') {
+                  sh 'mvn checkstyle:checkstyle'
             }
-        }
+         }
+      }
 
-
-        stage('Deploy to k8') {
-          steps {
-            container ('helm-kubectl') {
-              sh 'helm upgrade --install --force ecommerce helm/vprofilechart  \
-              --set vproapp.image.repository=${dockerRepoName} \
-              --set vproapp.image.tag=${imageTag} \
-              -n prod --create-namespace \
-              -f helm/vprofilechart/local-values.yaml'
-            }
-          }
-        }
     }
 }
