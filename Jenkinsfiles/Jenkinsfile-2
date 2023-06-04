@@ -15,9 +15,9 @@ pipeline {
                 tty: true
                 volumeMounts:
                 - mountPath: "/root/.m2/repository"
-                  name: maven-repository
+                  name: maven-cache
               volumes:
-              - name: maven-repository
+              - name: maven-cache
                 persisitentVolumeClaim:
                   claimName: maven-cache
             '''
