@@ -42,7 +42,7 @@ pipeline {
         imageTag = "V${BUILD_NUMBER}"
     }
 
-    // stages{
+    stages{
 
     //     stage('UNIT TEST') {
     //      steps {
