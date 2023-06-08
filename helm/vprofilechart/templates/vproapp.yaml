@@ -32,5 +32,9 @@ spec:
   ports:
   - port: {{ .Values.vproapp.service.port }}
     targetPort: {{ .Values.vproapp.portName }}
+    {{- $svc := .Values.vproapp.service.type -}}
+    {{- if eq $svc "NodePort" }}
+    nodePort: 30080
+    {{- end }}
   type: {{ .Values.vproapp.service.type }}
 

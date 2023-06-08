@@ -5,7 +5,7 @@ vproapp:
     tag: V1
   replicacount: 1
   service:
-    type: LoadBalancer
+    type: NodePort
 
 # Local values for memcache
 vpromc:
