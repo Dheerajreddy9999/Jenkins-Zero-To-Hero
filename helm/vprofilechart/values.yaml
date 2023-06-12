@@ -34,7 +34,7 @@ vprormq:
   service:
     port: 15672
     type: ClusterIP
-  rmq_password: Z3Vlc3Q=
+  rmq_password: guest
   rmq_user: "guest"
 
 
@@ -48,6 +48,6 @@ vprodb:
   portName: vprodb-port
   service:
     port: 3306
-  db_password: dnByb2RicGFzcw==
+  db_password: vprodbpass
   persistance:
     storage: 10Gi
