@@ -1,0 +1,6 @@
+kubernetes/
+helm/
+Jenkinsfile
+Jenkinsfile-k8s
+compose/
+Dockerfiles/

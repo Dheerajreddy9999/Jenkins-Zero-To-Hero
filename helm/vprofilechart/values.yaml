@@ -9,7 +9,7 @@ vproapp:
   service:
     port: 80
     type: LoadBalancer
-
+    nodePort: 30080
 
 # Default values for memcache
 vpromc:
@@ -25,7 +25,7 @@ vpromc:
 
 # Default values for rabbitmq
 vprormq:
-  image: 
+  image:
     repository: rabbitmq
     tag: latest
   replicacount: 2
@@ -40,7 +40,7 @@ vprormq:
 
 # Default values for mysql
 vprodb:
-  image: 
+  image:
     repository: asia.gcr.io/hypnotic-camp-371708/vprdbfix
     tag: latest
   replicacount: 2

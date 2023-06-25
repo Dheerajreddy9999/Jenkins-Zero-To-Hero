@@ -6,6 +6,7 @@ vproapp:
   replicacount: 1
   service:
     type: NodePort
+    nodePort: 30081
 
 # Local values for memcache
 vpromc:
@@ -14,11 +15,11 @@ vpromc:
 # Local values for rabbitmq
 vprormq:
   replicacount: 1
-  
+
 
 # Locall values for mysql
 vprodb:
-  image: 
+  image:
     repository: dheerajlearningdocker/vprofiledb
     tag: vprdbfix
   replicacount: 1
