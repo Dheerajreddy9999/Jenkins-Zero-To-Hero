@@ -129,7 +129,7 @@ pipeline {
           steps {
             container ('helm-kubectl') {
               withKubeCredentials(kubectlCredentials: [[caCertificate: '', clusterName: '', contextName: '', credentialsId: 'k3d-kubeconfig', namespace: '', serverUrl: '']]) {
-               sh 'helm upgrade --install --force ecommerce helm/vprofilechart  \
+               sh 'helm upgrade --install ecommerce helm/vprofilechart  \
                --set vproapp.image.repository=${dockerRepoName} \
                --set vproapp.image.tag=${imageTag} \
                -n prod --create-namespace \

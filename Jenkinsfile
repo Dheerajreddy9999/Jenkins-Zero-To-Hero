@@ -13,12 +13,6 @@ pipeline {
 
     stages{
 
-        stage('BUILD') {
-            steps {
-                sh 'mvn clean install -DskipTests'
-            }
-      }
-
       stage('UNIT TEST') {
          steps {
             sh 'mvn test'
@@ -29,6 +23,12 @@ pipeline {
          steps {
             sh 'mvn verify -DskipUnitTests'
          }      
+      }
+
+         stage('BUILD') {
+            steps {
+                sh 'mvn clean install -DskipTests'
+            }
       }
 
       stage('CODE ANALYSIS WITH CHECKSTYLE') {
@@ -93,7 +93,7 @@ pipeline {
       stage('Deploy to Kubernetes') {
          agent { label 'GKE' }
          steps {
-            sh 'helm upgrade --install --force ecommerce helm/vprofilechart  \
+            sh 'helm upgrade --install ecommerce helm/vprofilechart  \
             --set vproapp.image.repository=${dockerRepoName} \
             --set vproapp.image.tag=V${BUILD_NUMBER} \
             -n prod --create-namespace'
