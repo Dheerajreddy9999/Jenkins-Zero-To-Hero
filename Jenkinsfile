@@ -13,6 +13,13 @@ pipeline {
 
     stages{
 
+
+      stage('Git Checkout') {
+         steps {
+            git branch: 'main', url: 'https://github.com/Dheerajreddy9999/Jenkins-complete-e2e-pipeline'
+         }
+      }
+
       stage('UNIT TEST') {
          steps {
             sh 'mvn test'
