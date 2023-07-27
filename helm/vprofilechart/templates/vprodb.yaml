@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: vprodb
+  name: vprodb-{{ .Release.Name }}
 spec:
   selector:
     matchLabels:
@@ -29,12 +29,12 @@ spec:
           name: {{ .Values.vprodb.portName }}
         volumeMounts:
         - name: mypvc
-          mountPath: /var/lib/mysql
+          mountPath: {{ .Values.vprodb.mountPath }}
   volumeClaimTemplates:
   - metadata:
       name: mypvc
     spec:
-      accessModes: [ "ReadWriteOnce" ]
+      accessModes: [ {{ .Values.vprodb.persistance.accessModes | quote }} ]
       resources:
         requests:
           storage: {{ .Values.vprodb.persistance.storage }}

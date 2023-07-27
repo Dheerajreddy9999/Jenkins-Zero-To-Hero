@@ -49,5 +49,7 @@ vprodb:
   service:
     port: 3306
   db_password: vprodbpass
+  mountPath: /var/lib/mysql
   persistance:
     storage: 10Gi
+    accessModes: ReadWriteOnce
