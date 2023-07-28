@@ -43,7 +43,7 @@ vprodb:
   image:
     repository: asia.gcr.io/hypnotic-camp-371708/vprdbfix
     tag: latest
-  replicacount: 2
+  replicacount: 1
   containerport: 3306
   portName: vprodb-port
   service:
