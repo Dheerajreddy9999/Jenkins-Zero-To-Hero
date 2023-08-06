@@ -16,7 +16,7 @@ pipeline {
 
       stage('Git Checkout') {
          steps {
-            git branch: 'main', credentialsId: 'github-login', url: 'https://github.com/Dheerajreddy9999/Jenkins-complete-e2e-pipeline.git'
+            git branch: 'main', url: 'https://github.com/Dheerajreddy9999/Jenkins-complete-e2e-pipeline.git'
          }
       }
 
