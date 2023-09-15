@@ -7,11 +7,11 @@ environment {
 
     stages {
 
-        // stage('Checkout') {
-        //     steps {
-        //         git branch: 'main', url: 'https://github.com/Dheerajreddy9999/Jenkins-Zero-To-Hero'
-        //     }
-        // }
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/Dheerajreddy9999/Jenkins-Zero-To-Hero'
+            }
+        }
 
         stage('Build and Test') {
             agent {
@@ -22,16 +22,16 @@ environment {
             }
         }
 
-        // stage('Static Code Anlaysis') {
-        //     agent {
-        //         docker {image 'maven:3.9-eclipse-temurin-11-alpine'}
-        //     }
-        //     steps {
-        //         withSonarQubeEnv(installationName: 'SONAR5.1',credentialsId: 'sonar-token') {
-        //             sh 'mvn sonar:sonar'
-        //         }
-        //     }
-        // }
+        stage('Static Code Anlaysis') {
+            agent {
+                docker {image 'maven:3.9-eclipse-temurin-11-alpine'}
+            }
+            steps {
+                withSonarQubeEnv(installationName: 'SONAR5.1',credentialsId: 'sonar-token') {
+                    sh 'mvn sonar:sonar'
+                }
+            }
+        }
 
         stage('Build docker Image') {
             steps {
