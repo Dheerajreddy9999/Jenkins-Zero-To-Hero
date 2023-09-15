@@ -62,7 +62,7 @@ environment {
                 sh '''
                 BUILD_NUMBER=${BUILD_NUMBER}
                 sed -i "s/replaceImageTag/${BUILD_NUMBER}/g" jenkins-argocd-k8s/spring-boot-app-manifests/deployment.yml
-                cat deployment.yml
+                cat jenkins-argocd-k8s/spring-boot-app-manifests/deployment.yml
                 '''
             }
 
