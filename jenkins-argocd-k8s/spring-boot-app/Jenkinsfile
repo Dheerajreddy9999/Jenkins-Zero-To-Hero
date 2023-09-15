@@ -1,0 +1,23 @@
+pipeline {
+    agent {
+        docker{
+            image 'maven:3.9-eclipse-temurin-11-alpine'
+            args '--user root -v /var/run/docker.sock:/var/run/docker.sock' // mount Docker socket to access the host's Docker daemon
+        }
+    }
+
+    stages {
+
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/Dheerajreddy9999/Jenkins-Zero-To-Hero'
+            }
+        }
+
+        stage('Build and Test') {
+            steps {
+                sh 'cd Jenkins-Zero-To-Hero/spring-boot-app && mvn clean package'
+            }
+        }
+    }
+}
