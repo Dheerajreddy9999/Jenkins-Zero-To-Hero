@@ -62,14 +62,14 @@ environment {
                 GIT_USER_NAME = "Dheerajreddy9999"
             }
             steps {
-                withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
+                withCredentials([string(credentialsId: 'github', variable: 'gittoken')]) {
                     sh '''
                     git config user.email "ksreddy.dheeraj@gmail.com"
                     git config user.name "Dheerajreddy9999"
                     sed -i "s/replaceImageTag/${BUILD_NUMBER}/g" jenkins-argocd-k8s/spring-boot-app-manifests/deployment.yaml"
                     git add jenkins-argocd-k8s/spring-boot-app-manifests/deployment.yaml
                     git commit -m "Update deployment image to version ${BUILD_NUMBER}"
-                    git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
+                    git push https://${gittoken}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
                     '''
                 }
             }
