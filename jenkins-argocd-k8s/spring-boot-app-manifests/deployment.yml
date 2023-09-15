@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: spring-boot-app
-        image: dheerajlearningdocker/ultimate-cicd:replaceImageTag
+        image: dheerajlearningdocker/ultimate-cicd:46
         ports:
         - containerPort: 8080
