@@ -41,17 +41,13 @@ environment {
 
         stage('Push Docker Image') {
             steps {
-                sh '''
                 def dockerImage = docker.image("${DOCKER_IMAGE}")
                 withDockerRegistry(credentialsId: 'docker-cred', url: 'https://index.docker.io/v1/') {
                     dockerImage.Push()
-                    '''
                 }
             }
 
-            steps {
-                sh 'docker rmi {$DOCKER_IMAGE}'
-            }
+    
         }
     }
 }
