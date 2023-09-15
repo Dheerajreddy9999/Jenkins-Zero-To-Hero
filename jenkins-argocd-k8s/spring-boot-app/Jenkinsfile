@@ -19,9 +19,12 @@ pipeline {
         }
 
         stage('Static Code Anlaysis') {
+            agent {
+                docker {image 'maven:3.9-eclipse-temurin-11-alpine'}
+            }
             steps {
                 withSonarQubeEnv(installationName: 'SONAR5.1',credentialsId: 'sonar-token') {
-                    sh 'mvn sonar:sonar '
+                    sh 'mvn sonar:sonar'
                 }
             }
         }
