@@ -14,7 +14,7 @@ pipeline {
                 docker {image 'maven:3.9-eclipse-temurin-11-alpine'}
             }
             steps {
-                sh 'cd jenkins-argocd-k8s/spring-boot-app && mvn clean package'
+                sh 'cd jenkins-argocd-k8s/spring-boot-app && mvn clean install'
             }
         }
 
