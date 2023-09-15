@@ -17,5 +17,13 @@ pipeline {
                 sh 'cd jenkins-argocd-k8s/spring-boot-app && mvn clean package'
             }
         }
+
+        stage('Static Code Anlaysis') {
+            steps {
+                withSonarQubeEnv(installationName: 'SONAR5.1',credentialsId: 'sonar-token') {
+                    sh 'mvn sonar:sonar '
+                }
+            }
+        }
     }
 }
