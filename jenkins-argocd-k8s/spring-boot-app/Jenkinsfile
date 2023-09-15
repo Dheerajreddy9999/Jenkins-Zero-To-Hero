@@ -48,6 +48,10 @@ environment {
                 }
               } 
             }
+
+            steps {
+                sh 'docker rmi -f ${DOCKER_IMAGE}'
+            }
         }
 
 
