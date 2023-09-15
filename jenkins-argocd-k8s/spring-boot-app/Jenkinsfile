@@ -1,5 +1,10 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'maven:3.9-eclipse-temurin-11-alpine'
+            args '--user root -v /var/run/docker.sock:/var/run/docker.sock' // mount Docker socket to access the host's Docker daemon
+        }
+    }
 
     stages {
 
@@ -10,18 +15,12 @@ pipeline {
         // }
 
         stage('Build and Test') {
-            agent {
-                docker {image 'maven:3.9-eclipse-temurin-11-alpine'}
-            }
             steps {
                 sh 'cd jenkins-argocd-k8s/spring-boot-app && mvn clean install'
             }
         }
 
         stage('Static Code Anlaysis') {
-            agent {
-                docker {image 'maven:3.9-eclipse-temurin-11-alpine'}
-            }
             steps {
                 withSonarQubeEnv(installationName: 'SONAR5.1',credentialsId: 'sonar-token') {
                     sh 'mvn sonar:sonar'
