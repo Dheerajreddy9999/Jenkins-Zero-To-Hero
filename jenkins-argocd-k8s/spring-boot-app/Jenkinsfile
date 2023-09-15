@@ -49,9 +49,11 @@ environment {
               } 
             }
 
-            steps {
-                sh 'docker rmi -f ${DOCKER_IMAGE}'
+           post {
+            success {
+                sh 'docker rmi ${DOCKER_IMAGE}'
             }
+           }
         }
 
 
