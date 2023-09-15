@@ -34,7 +34,7 @@ environment {
         // }
 
         stage('Build docker Image') {
-            stepa {
+            steps {
                 sh 'cd jenkins-argocd-k8s/spring-boot-app && docker build -t  ${DOCKER_IMAGE} .'
             }
         }
