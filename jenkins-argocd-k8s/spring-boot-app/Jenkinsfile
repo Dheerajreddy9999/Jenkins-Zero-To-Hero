@@ -67,7 +67,7 @@ environment {
 
         }
 
-        stage('Update Deployment File'){
+        stage('push changes to git'){
             environment {
                 GIT_REPO_NAME = "Jenkins-Zero-To-Hero"
                 GIT_USER_NAME = "Dheerajreddy9999"
