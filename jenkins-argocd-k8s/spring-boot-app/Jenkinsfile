@@ -61,7 +61,7 @@ environment {
             steps {
                 sh '''
                 BUILD_NUMBER=${BUILD_NUMBER}
-                sed -i "s/replaceImageTag/${BUILD_NUMBER}/g" jenkins-argocd-k8s/spring-boot-app-manifests/deployment.yaml
+                sed -i "s/replaceImageTag/${BUILD_NUMBER}/g" $PWD/jenkins-argocd-k8s/spring-boot-app-manifests/deployment.yaml
                 '''
             }
 
