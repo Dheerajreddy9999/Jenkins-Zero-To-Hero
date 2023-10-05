@@ -118,32 +118,17 @@ pipeline {
         }
 
 
-        // stage('Deploy to k8') {
-        //   steps {
-        //     container ('helm-kubectl') {
-        //       sh 'helm upgrade --install --force ecommerce helm/vprofilechart  \
-        //       --set vproapp.image.repository=${dockerRepoName} \
-        //       --set vproapp.image.tag=${imageTag} \
-        //       -n prod --create-namespace \
-        //       -f helm/vprofilechart/dev-values.yaml'
-        //     }
-        //   }
-        // }
-
-
-
         stage('Deploy to k8') {
           steps {
             container ('helm-kubectl') {
-              withKubeCredentials(kubectlCredentials: [[caCertificate: '', clusterName: '', contextName: '', credentialsId: 'k3d-kubeconfig', namespace: '', serverUrl: '']]) {
-               sh 'helm upgrade --install ecommerce helm/vprofilechart  \
-               --set vproapp.image.repository=${dockerRepoName} \
-               --set vproapp.image.tag=${imageTag} \
-               -n prod --create-namespace \
-               -f helm/vprofilechart/dev-values.yaml'
-              }
+              sh 'helm upgrade --install --force ecommerce helm/vprofilechart  \
+              --set vproapp.image.repository=${dockerRepoName} \
+              --set vproapp.image.tag=${imageTag} \
+              -n prod --create-namespace \
+              -f helm/vprofilechart/dev-values.yaml'
             }
           }
         }
+
     }
 }
