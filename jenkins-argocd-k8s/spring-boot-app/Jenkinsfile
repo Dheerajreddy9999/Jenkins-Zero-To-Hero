@@ -65,7 +65,7 @@ pipeline {
         stage ('build image') {
             steps {
                 container ('kaniko') {
-                    sh "/kaniko/executor --context `pwd`/jenkins-argocd-k8s/spring-boot-app --destination ${DOCKER_IMAGE} "
+                    sh "/kaniko/executor --context `pwd`/jenkins-argocd-k8s/spring-boot-app --destination ${DOCKER_IMAGE} --cleanup "
                 }
             }
         }
