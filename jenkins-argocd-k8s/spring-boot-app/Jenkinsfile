@@ -1,0 +1,78 @@
+pipeline {
+    agent {
+        kubernetes {
+            yaml '''
+            apiVersion: v1
+            kind: Pod
+            metadata:
+            spec:
+              serviceAccount: jenkins
+              containers:
+              - name: maven
+                image: maven:3.9-eclipse-temurin-11-alpine
+                command:
+                - cat
+                tty: true
+              - name: helm-kubectl
+                image: dtzar/helm-kubectl:3.12.3
+                command:
+                - cat
+                tty: true
+              - name: kaniko
+                image: gcr.io/kaniko-project/executor:debug
+                command:
+                - cat
+                tty: true
+                volumeMounts:
+                - name: kaniko-secret
+                  mountPath: /kaniko/.docker
+              volumes:
+              - name: kaniko-secret
+                secret:
+                  secretName: regcred
+                  items:
+                    - key: .dockerconfigjson
+                      path: config.json
+            '''
+        }
+    }
+
+    environment {
+        DOCKER_IMAGE = "dheerajlearningdocker/ultimate-cicd:${BUILD_NUMBER}"
+    }
+
+    stages{
+
+
+    //   stage('Git Checkout') {
+    //     steps {
+    //       git branch: 'main', url: 'https://github.com/Dheerajreddy9999/Jenkins-complete-e2e-pipeline.git'
+    //     }
+    //   }
+
+
+      stage ('Build') {
+            steps {
+                container ('maven') {
+                    sh 'cd jenkins-argocd-k8s/spring-boot-app && mvn package'
+                }
+            }
+        }
+
+
+    
+
+        stage ('build image') {
+            steps {
+                container ('kaniko') {
+                    sh "/kaniko/executor --context `pwd` --dockerfile `pwd`/jenkins-argocd-k8s/spring-boot-app --destination ${DOCKER_IMAGE} "
+                }
+            }
+        }
+
+
+    
+
+
+    }
+}
