@@ -7,11 +7,11 @@ environment {
 
     stages {
 
-        stage('Checkout') {
-            steps {
-                git branch: 'main', url: 'https://github.com/Dheerajreddy9999/Jenkins-Zero-To-Hero'
-            }
-        }
+        // stage('Checkout') {
+        //     steps {
+        //         git branch: 'main', url: 'https://github.com/Dheerajreddy9999/Jenkins-Zero-To-Hero'
+        //     }
+        // }
 
         stage('Build and Test') {
             agent {
@@ -22,16 +22,6 @@ environment {
             }
         }
 
-        stage('Static Code Anlaysis') {
-            agent {
-                docker {image 'maven:3.9-eclipse-temurin-11-alpine'}
-            }
-            steps {
-                withSonarQubeEnv(installationName: 'SONAR5.1',credentialsId: 'sonar-token') {
-                    sh 'mvn sonar:sonar'
-                }
-            }
-        }
 
         stage('Build docker Image') {
             steps {
@@ -57,35 +47,35 @@ environment {
         }
 
 
-        stage('Update Deployment File') {
-            steps {
-                sh '''
-                BUILD_NUMBER=${BUILD_NUMBER}
-                sed -i "s/replaceImageTag/${BUILD_NUMBER}/g" jenkins-argocd-k8s/spring-boot-app-manifests/deployment.yml
-                cat jenkins-argocd-k8s/spring-boot-app-manifests/deployment.yml
-                '''
-            }
+        // stage('Update Deployment File') {
+        //     steps {
+        //         sh '''
+        //         BUILD_NUMBER=${BUILD_NUMBER}
+        //         sed -i "s/replaceImageTag/${BUILD_NUMBER}/g" jenkins-argocd-k8s/spring-boot-app-manifests/deployment.yml
+        //         cat jenkins-argocd-k8s/spring-boot-app-manifests/deployment.yml
+        //         '''
+        //     }
 
-        }
+        // }
 
-        stage('push changes to git'){
-            environment {
-                GIT_REPO_NAME = "Jenkins-Zero-To-Hero"
-                GIT_USER_NAME = "Dheerajreddy9999"
-            }
-            steps {
-                withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
-                    sh '''
-                    git config user.email "ksreddy.dheeraj@gmail.com"
-                    git config user.name "Dheerajreddy9999"
-                    git add jenkins-argocd-k8s/spring-boot-app-manifests/deployment.yml
-                    git commit -m "Update deployment image to version ${BUILD_NUMBER}"
-                    git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
+        // stage('push changes to git'){
+        //     environment {
+        //         GIT_REPO_NAME = "Jenkins-Zero-To-Hero"
+        //         GIT_USER_NAME = "Dheerajreddy9999"
+        //     }
+        //     steps {
+        //         withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
+        //             sh '''
+        //             git config user.email "ksreddy.dheeraj@gmail.com"
+        //             git config user.name "Dheerajreddy9999"
+        //             git add jenkins-argocd-k8s/spring-boot-app-manifests/deployment.yml
+        //             git commit -m "Update deployment image to version ${BUILD_NUMBER}"
+        //             git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
 
-                '''
-                }
-            }
-        }
+        //         '''
+        //         }
+        //     }
+        // }
 
 
 
