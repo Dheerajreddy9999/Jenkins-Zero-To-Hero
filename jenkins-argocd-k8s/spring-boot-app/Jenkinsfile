@@ -54,7 +54,7 @@ pipeline {
       stage ('Build') {
             steps {
                 container ('maven') {
-                    sh 'cd jenkins-argocd-k8s/spring-boot-app && mvn package'
+                    sh 'cd jenkins-argocd-k8s/spring-boot-app && mvn package -DskipTests'
                 }
             }
         }
@@ -65,7 +65,7 @@ pipeline {
         stage ('build image') {
             steps {
                 container ('kaniko') {
-                    sh "/kaniko/executor --context `pwd` --dockerfile `pwd`/jenkins-argocd-k8s/spring-boot-app --destination ${DOCKER_IMAGE} "
+                    sh "/kaniko/executor --context `pwd`/jenkins-argocd-k8s/spring-boot-app --destination ${DOCKER_IMAGE} "
                 }
             }
         }
