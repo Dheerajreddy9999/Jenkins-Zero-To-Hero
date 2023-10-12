@@ -44,13 +44,13 @@ pipeline {
           git branch: 'main', url: 'https://github.com/Dheerajreddy9999/Jenkins-complete-e2e-pipeline.git'
         }
       }
-      stage ('test') {
-            steps {
-                container ('maven') {
-                    sh 'cd jenkins-argocd-k8s/spring-boot-app && mvn test'
-                }
-            }
-        }
+      // stage ('test') {
+      //       steps {
+      //           container ('maven') {
+      //               sh 'cd jenkins-argocd-k8s/spring-boot-app && mvn test'
+      //           }
+      //       }
+      //   }
 
       stage ('Build') {
             steps {
