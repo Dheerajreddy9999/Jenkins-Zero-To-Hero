@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: guestbook
+  namespace: deafult
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/Dheerajreddy9999/Jenkins-Zero-To-Hero
+    targetRevision: HEAD
+    path: jenkins-argocd-k8s/spring-boot-app-chart
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: prod
+  
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true 
