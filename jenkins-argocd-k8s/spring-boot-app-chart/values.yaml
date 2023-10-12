@@ -3,7 +3,7 @@ replicaCount: 2
 
 image:
   repo: dheerajlearningdocker/ultimate-cicd
-  tag: 8
+  tag: 10
   env: dev
 
 deployment:
