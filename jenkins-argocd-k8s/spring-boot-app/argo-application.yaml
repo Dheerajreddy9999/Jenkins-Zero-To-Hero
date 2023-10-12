@@ -2,13 +2,17 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: guestbook
-  namespace: deafult
+  namespace: default
 spec:
   project: default
   source:
     repoURL: https://github.com/Dheerajreddy9999/Jenkins-Zero-To-Hero
     targetRevision: HEAD
     path: jenkins-argocd-k8s/spring-boot-app-chart
+
+    helm:
+      valueFiles:
+      - values.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: prod
