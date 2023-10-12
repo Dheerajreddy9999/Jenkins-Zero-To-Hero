@@ -39,37 +39,37 @@ pipeline {
     stages{
 
 
-    //   stage('Git Checkout') {
-    //     steps {
-    //       git branch: 'main', url: 'https://github.com/Dheerajreddy9999/Jenkins-complete-e2e-pipeline.git'
-    //     }
-    //   }
-      // stage ('test') {
-      //       steps {
-      //           container ('maven') {
-      //               sh 'cd jenkins-argocd-k8s/spring-boot-app && mvn test'
-      //           }
-      //       }
-      //   }
+      stage('Git Checkout') {
+        steps {
+          git branch: 'main', url: 'https://github.com/Dheerajreddy9999/Jenkins-complete-e2e-pipeline.git'
+        }
+      }
+      stage ('test') {
+            steps {
+                container ('maven') {
+                    sh 'cd jenkins-argocd-k8s/spring-boot-app && mvn test'
+                }
+            }
+        }
 
-      // stage ('Build') {
-      //       steps {
-      //           container ('maven') {
-      //               sh 'cd jenkins-argocd-k8s/spring-boot-app && mvn package -DskipTests'
-      //           }
-      //       }
-      //   }
+      stage ('Build') {
+            steps {
+                container ('maven') {
+                    sh 'cd jenkins-argocd-k8s/spring-boot-app && mvn package -DskipTests'
+                }
+            }
+        }
 
 
     
 
-      //   stage ('build image') {
-      //       steps {
-      //           container ('kaniko') {
-      //               sh "/kaniko/executor --context `pwd`/jenkins-argocd-k8s/spring-boot-app --destination ${DOCKER_IMAGE} --cleanup "
-      //           }
-      //       }
-      //   }
+        stage ('build image') {
+            steps {
+                container ('kaniko') {
+                    sh "/kaniko/executor --context `pwd`/jenkins-argocd-k8s/spring-boot-app --destination ${DOCKER_IMAGE} --cleanup "
+                }
+            }
+        }
 
 
         stage ('Update Helm chart') {
