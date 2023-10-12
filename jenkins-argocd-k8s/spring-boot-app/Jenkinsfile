@@ -13,11 +13,6 @@ pipeline {
                 command:
                 - cat
                 tty: true
-              - name: helm-kubectl
-                image: dtzar/helm-kubectl:3.12.3
-                command:
-                - cat
-                tty: true
               - name: kaniko
                 image: gcr.io/kaniko-project/executor:debug
                 command:
@@ -49,32 +44,32 @@ pipeline {
     //       git branch: 'main', url: 'https://github.com/Dheerajreddy9999/Jenkins-complete-e2e-pipeline.git'
     //     }
     //   }
-      stage ('test') {
-            steps {
-                container ('maven') {
-                    sh 'cd jenkins-argocd-k8s/spring-boot-app && mvn test'
-                }
-            }
-        }
+      // stage ('test') {
+      //       steps {
+      //           container ('maven') {
+      //               sh 'cd jenkins-argocd-k8s/spring-boot-app && mvn test'
+      //           }
+      //       }
+      //   }
 
-      stage ('Build') {
-            steps {
-                container ('maven') {
-                    sh 'cd jenkins-argocd-k8s/spring-boot-app && mvn package -DskipTests'
-                }
-            }
-        }
+      // stage ('Build') {
+      //       steps {
+      //           container ('maven') {
+      //               sh 'cd jenkins-argocd-k8s/spring-boot-app && mvn package -DskipTests'
+      //           }
+      //       }
+      //   }
 
 
     
 
-        stage ('build image') {
-            steps {
-                container ('kaniko') {
-                    sh "/kaniko/executor --context `pwd`/jenkins-argocd-k8s/spring-boot-app --destination ${DOCKER_IMAGE} --cleanup "
-                }
-            }
-        }
+      //   stage ('build image') {
+      //       steps {
+      //           container ('kaniko') {
+      //               sh "/kaniko/executor --context `pwd`/jenkins-argocd-k8s/spring-boot-app --destination ${DOCKER_IMAGE} --cleanup "
+      //           }
+      //       }
+      //   }
 
 
         stage ('Update Helm chart') {
@@ -88,6 +83,7 @@ pipeline {
               sh '''
               git config user.email "ksreddy.dheeraj@gmail.com"
               git config user.name "Dheerajreddy9999"
+              sed -i "s/tag:.*/tag: ${BUILD_NUMBER}" jenkins-argocd-k8s/spring-boot-app-chart/values.yaml
               
               '''
             }
