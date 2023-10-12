@@ -84,6 +84,9 @@ pipeline {
               git config user.email "ksreddy.dheeraj@gmail.com"
               git config user.name "Dheerajreddy9999"
               sed -i "s/tag:.*/tag: ${BUILD_NUMBER}/g" jenkins-argocd-k8s/spring-boot-app-chart/values.yaml
+              git add jenkins-argocd-k8s/spring-boot-app-chart/values.yaml
+              git commit -m "Update deployment to current version ${BUILD_NUMBER}"
+              git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
               
               '''
             }
