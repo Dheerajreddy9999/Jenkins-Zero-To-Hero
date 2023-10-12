@@ -83,7 +83,7 @@ pipeline {
               sh '''
               git config user.email "ksreddy.dheeraj@gmail.com"
               git config user.name "Dheerajreddy9999"
-              sed -i "s/tag:.*/tag: ${BUILD_NUMBER}" jenkins-argocd-k8s/spring-boot-app-chart/values.yaml
+              sed -i "s/tag:.*/tag: ${BUILD_NUMBER}/g" jenkins-argocd-k8s/spring-boot-app-chart/values.yaml
               
               '''
             }
