@@ -1,0 +1,18 @@
+
+replicaCount: 2
+
+image:
+  repo: dheerajlearningdocker/ultimate-cicd
+  tag: 49
+  env: dev
+
+deployment:
+  containerPort: 8080
+  
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 8080
+
+
+
