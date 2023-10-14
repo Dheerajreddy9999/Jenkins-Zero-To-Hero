@@ -44,13 +44,13 @@ pipeline {
       //     git branch: 'main', url: 'https://github.com/Dheerajreddy9999/Jenkins-complete-e2e-pipeline.git'
       //   }
       // }
-      // stage ('test') {
-      //       steps {
-      //           container ('maven') {
-      //               sh 'cd jenkins-argocd-k8s/spring-boot-app && mvn test'
-      //           }
-      //       }
-      //   }
+      stage ('test') {
+            steps {
+                container ('maven') {
+                    sh 'cd jenkins-argocd-k8s/spring-boot-app && mvn test'
+                }
+            }
+        }
 
       stage ('Build') {
             steps {
@@ -88,35 +88,35 @@ pipeline {
 
     
 
-        // stage ('build image') {
-        //     steps {
-        //         container ('kaniko') {
-        //             sh "/kaniko/executor --context `pwd`/jenkins-argocd-k8s/spring-boot-app --destination ${DOCKER_IMAGE} --cleanup "
-        //         }
-        //     }
-        // }
+        stage ('build image') {
+            steps {
+                container ('kaniko') {
+                    sh "/kaniko/executor --context `pwd`/jenkins-argocd-k8s/spring-boot-app --destination ${DOCKER_IMAGE} --cleanup "
+                }
+            }
+        }
 
 
-        // stage ('Update Helm chart') {
-        //   environment {
-        //     GIT_REPO_NAME = "Jenkins-Zero-To-Hero"
-        //     GIT_USER_NAME = "Dheerajreddy9999"
-        //   }
+        stage ('Update Helm chart') {
+          environment {
+            GIT_REPO_NAME = "Jenkins-Zero-To-Hero"
+            GIT_USER_NAME = "Dheerajreddy9999"
+          }
 
-        //   steps {
-        //     withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
-        //       sh '''
-        //       git config user.email "ksreddy.dheeraj@gmail.com"
-        //       git config user.name "Dheerajreddy9999"
-        //       sed -i "s/tag:.*/tag: ${BUILD_NUMBER}/g" jenkins-argocd-k8s/spring-boot-app-chart/values.yaml
-        //       git add jenkins-argocd-k8s/spring-boot-app-chart/values.yaml
-        //       git commit -m "Update deployment to current version ${BUILD_NUMBER}"
-        //       git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
+          steps {
+            withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
+              sh '''
+              git config user.email "ksreddy.dheeraj@gmail.com"
+              git config user.name "Dheerajreddy9999"
+              sed -i "s/tag:.*/tag: ${BUILD_NUMBER}/g" jenkins-argocd-k8s/spring-boot-app-chart/values.yaml
+              git add jenkins-argocd-k8s/spring-boot-app-chart/values.yaml
+              git commit -m "Update deployment to current version ${BUILD_NUMBER}"
+              git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
               
-        //       '''
-        //     }
-        //   }
-        // }
+              '''
+            }
+          }
+        }
 
     
 
