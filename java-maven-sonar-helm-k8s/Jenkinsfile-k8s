@@ -109,13 +109,13 @@ pipeline {
            }
       } 
 
-//         stage ('build image') {
-//             steps {
-//                 container ('kaniko') {
-//                     sh "/kaniko/executor --context `pwd` --destination $dockerRepoName:$imageTag "
-//                 }
-//             }
-//         }
+        stage ('build image') {
+            steps {
+                container ('kaniko') {
+                    sh "/kaniko/executor --context `pwd`/java-maven-sonar-helm-k8s --destination $dockerRepoName:$imageTag --cleanup"
+                }
+            }
+        }
 
 
 //         stage('Deploy to k8') {
