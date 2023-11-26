@@ -125,7 +125,7 @@ pipeline {
               --set vproapp.image.repository=${dockerRepoName} \
               --set vproapp.image.tag=${imageTag} \
               -n prod --create-namespace \
-              -f helm/vprofilechart/dev-values.yaml'
+              -f java-maven-sonar-helm-k8s/helm/vprofilechart/dev-values.yaml'
             }
           }
         }
