@@ -14,7 +14,7 @@ pipeline {
                 - cat
                 tty: true
               - name: helm-kubectl
-                image: dtzar/helm-kubectl:3.12.1
+                image: dtzar/helm-kubectl:3.12.3
                 command:
                 - cat
                 tty: true
