@@ -51,22 +51,22 @@ pipeline {
       //   }
       // }
 
-      //   stage('UNIT TEST') {
-      //    steps {
-      //       container ('maven') {
-      //           sh 'cd java-maven-sonar-helm-k8s && mvn test'
-      //       }
-      //    }
-      // }
+        stage('UNIT TEST') {
+         steps {
+            container ('maven') {
+                sh 'cd java-maven-sonar-helm-k8s && mvn test'
+            }
+         }
+      }
 
 
-      // stage('INTEGRATION TEST') {
-      //    steps {
-      //        container ('maven') {
-      //            sh 'cd java-maven-sonar-helm-k8s && mvn verify -DskipUnitTests'
-      //       }
-      //    }      
-      // }
+      stage('INTEGRATION TEST') {
+         steps {
+             container ('maven') {
+                 sh 'cd java-maven-sonar-helm-k8s && mvn verify -DskipUnitTests'
+            }
+         }      
+      }
 
       stage ('Build') {
             steps {
@@ -118,17 +118,17 @@ pipeline {
         }
 
 
-//         stage('Deploy to k8') {
-//           steps {
-//             container ('helm-kubectl') {
-//               sh 'helm upgrade --install --force ecommerce helm/vprofilechart  \
-//               --set vproapp.image.repository=${dockerRepoName} \
-//               --set vproapp.image.tag=${imageTag} \
-//               -n prod --create-namespace \
-//               -f helm/vprofilechart/dev-values.yaml'
-//             }
-//           }
-//         }
+        stage('Deploy to k8') {
+          steps {
+            container ('helm-kubectl') {
+              sh 'helm upgrade --install --force ecommerce java-maven-sonar-helm-k8s/helm/vprofilechart  \
+              --set vproapp.image.repository=${dockerRepoName} \
+              --set vproapp.image.tag=${imageTag} \
+              -n prod --create-namespace \
+              -f helm/vprofilechart/dev-values.yaml'
+            }
+          }
+        }
 
     }
 }
