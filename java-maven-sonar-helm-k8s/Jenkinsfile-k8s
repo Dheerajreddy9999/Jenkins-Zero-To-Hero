@@ -45,11 +45,11 @@ pipeline {
     stages{
 
 
-      // stage('Git Checkout') {
-      //   steps {
-      //     git branch: 'main', url: 'https://github.com/Dheerajreddy9999/Jenkins-complete-e2e-pipeline.git'
-      //   }
-      // }
+      stage('Git Checkout') {
+        steps {
+          git branch: 'main', url: 'https://github.com/Dheerajreddy9999/Jenkins-complete-e2e-pipeline.git'
+        }
+      }
 
         stage('UNIT TEST') {
          steps {
